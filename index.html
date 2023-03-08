@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="main"></div>
+
+    <script>
+      window.backUrl = "https://skypro-rock-scissors-paper.herokuapp.com";
+      window.tie = false
+      window.application = {
+        blocks: {},
+        screens: {},
+        renderScreen: function (screenName) {
+          window.application.screens[screenName]();
+        },
+        renderBlock: function (blockName, container, name, feature) {
+          if (!window.application.blocks[blockName]) {
+            throw new Error("введеный блок не существует");
+            return;
+          }
+          window.application.blocks[blockName](container, name, feature);
+        },
+        timers: [],
+      };
+
+      function renderButton(container, name, eventFunc) {
+        const button = document.createElement("button");
+        button.textContent = name;
+
+        button.addEventListener("click", (e) => {
+          eventFunc(e);
+        });
+        container.appendChild(button);
+      }
+
+      window.application.blocks["button"] = renderButton;
+    </script>
+    <script src="login_screen.js"></script>
+    <script src="lobby_screen.js"></script>
+    <script src="game_screen.js"></script>
+    <script src="waiting_screen.js"></script>
+    <script src="waiting_turn_screen.js"></script>
+    <script src="win_screen.js"></script>
+    <script src="lose_screen.js"></script>
+  </body>
+</html>
